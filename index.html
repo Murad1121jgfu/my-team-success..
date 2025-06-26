@@ -1,0 +1,2719 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Earning & Learning Platform</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Global Styles */
+        :root {
+            --primary-color: #4361ee;
+            --secondary-color: #3a0ca3;
+            --accent-color: #4cc9f0;
+            --success-color: #2ecc71;
+            --warning-color: #f39c12;
+            --danger-color: #e74c3c;
+            --dark-color: #2c3e50;
+            --light-color: #ecf0f1;
+            --background-color: #f8f9fa;
+            --card-background: #ffffff;
+            --text-color: #333333;
+            --border-color: #dfe6e9;
+            --shadow-light: 0 4px 12px rgba(0, 0, 0, 0.08);
+            --shadow-medium: 0 8px 24px rgba(0, 0, 0, 0.12);
+            --gradient-primary: linear-gradient(135deg, #4361ee 0%, #3a0ca3 100%);
+            --gradient-accent: linear-gradient(135deg, #4cc9f0 0%, #4361ee 100%);
+            --glass-effect: rgba(255, 255, 255, 0.15);
+            --glass-border: rgba(255, 255, 255, 0.2);
+            --verified-color: #1da1f2;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            padding: 20px;
+            background-image: radial-gradient(circle at 1px 1px, rgba(0, 0, 0, 0.05) 1px, transparent 0);
+            background-size: 20px 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: var(--glass-effect);
+            padding: 25px;
+            border-radius: 16px;
+            box-shadow: var(--shadow-medium);
+            transition: all 0.3s ease-in-out;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(10px);
+        }
+
+        .container::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: var(--gradient-primary);
+            opacity: 0.05;
+            z-index: -1;
+            transform: rotate(45deg);
+            animation: gradientRotate 20s linear infinite;
+        }
+
+        @keyframes gradientRotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 25px;
+            position: relative;
+        }
+
+        .header h1 {
+            color: var(--primary-color);
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: inline-block;
+            position: relative;
+        }
+
+        .header h1::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background: var(--gradient-accent);
+            border-radius: 3px;
+        }
+
+        .header p {
+            color: #666;
+            font-size: 1rem;
+        }
+
+        /* Notification Bar */
+        .notification-bar {
+            background-color: rgba(255, 255, 255, 0.9);
+            border-bottom: 1px solid var(--border-color);
+            padding: 15px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-radius: 12px 12px 0 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            font-size: 0.9em;
+            color: #555;
+            overflow: hidden;
+            display: none;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .notification-bar ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            height: 20px;
+            overflow: hidden;
+        }
+
+        .notification-bar li {
+            animation: slideUp 10s infinite;
+            padding: 2px 0;
+            position: relative;
+            padding-left: 15px;
+        }
+
+        .notification-bar li::before {
+            content: '•';
+            position: absolute;
+            left: 0;
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+
+        @keyframes slideUp {
+            0% { transform: translateY(0); opacity: 1; }
+            10% { transform: translateY(0); opacity: 1; }
+            20% { transform: translateY(-100%); opacity: 0; }
+            21% { transform: translateY(100%); opacity: 0; }
+            100% { transform: translateY(0); opacity: 1; }
+        }
+
+        /* Form & Page Section Styles */
+        .page-section {
+            display: none;
+            padding: 20px 0;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        .page-section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .page-section h2 {
+            font-size: 1.8rem;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            text-align: center;
+            font-weight: 700;
+            position: relative;
+            display: inline-block;
+            width: 100%;
+        }
+
+        .page-section h2::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: var(--gradient-accent);
+            border-radius: 3px;
+        }
+
+        .input-group {
+            margin-bottom: 18px;
+            position: relative;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #555;
+            font-size: 0.95rem;
+        }
+
+        .input-group input,
+        .input-group select {
+            width: 100%;
+            padding: 14px;
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: all 0.3s;
+            background-color: rgba(255, 255, 255, 0.8);
+        }
+
+        .input-group input:focus,
+        .input-group select:focus {
+            border-color: var(--primary-color);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
+            background-color: #fff;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 16px;
+            background: var(--gradient-primary);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 10px;
+            box-shadow: 0 4px 12px rgba(67, 97, 238, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: 0.5s;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(67, 97, 238, 0.4);
+        }
+
+        .btn:hover::after {
+            left: 100%;
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .link-text {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .link-text a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s;
+            position: relative;
+        }
+
+        .link-text a::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary-color);
+            transition: width 0.3s;
+        }
+
+        .link-text a:hover::after {
+            width: 100%;
+        }
+
+        /* Landing Page Content */
+        .landing-content {
+            margin-top: 30px;
+            padding: 25px;
+            background: rgba(236, 240, 241, 0.6);
+            border-radius: 12px;
+            text-align: center;
+            animation: fadeIn 0.7s;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+
+        .landing-content h3 {
+            color: var(--secondary-color);
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .landing-content ul {
+            list-style: none;
+            padding: 0;
+            text-align: left;
+            margin-top: 15px;
+        }
+
+        .landing-content li {
+            background: rgba(46, 204, 113, 0.1);
+            padding: 14px;
+            margin-bottom: 12px;
+            border-radius: 8px;
+            font-weight: 500;
+            color: var(--success-color);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            position: relative;
+            padding-left: 40px;
+            transition: transform 0.3s;
+            border-left: 3px solid var(--success-color);
+        }
+
+        .landing-content li:hover {
+            transform: translateX(5px);
+        }
+
+        .landing-content li::before {
+            content: '✓';
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--success-color);
+            font-weight: bold;
+        }
+
+        /* Dashboard Styles */
+        .user-info, .balance-info, .profile-buttons {
+            background-color: rgba(255, 255, 255, 0.8);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            text-align: center;
+            animation: fadeIn 0.7s;
+            backdrop-filter: blur(5px);
+            box-shadow: var(--shadow-light);
+        }
+        
+        .user-info h3 {
+            font-size: 1.5rem;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 5px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+        }
+
+        .verified-badge {
+            color: var(--verified-color);
+            font-size: 1.2rem;
+            display: inline-flex;
+            align-items: center;
+        }
+
+        .profile-picture {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--primary-color);
+            margin-bottom: 15px;
+            box-shadow: 0 4px 12px rgba(67, 97, 238, 0.3);
+            transition: all 0.3s;
+        }
+
+        .profile-picture:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 16px rgba(67, 97, 238, 0.4);
+        }
+
+        .profile-picture-container {
+            position: relative;
+            display: inline-block;
+            cursor: pointer;
+        }
+
+        .profile-picture-container .upload-icon {
+            position: absolute;
+            bottom: 5px;
+            right: 5px;
+            background: var(--gradient-accent);
+            color: white;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+            cursor: pointer;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s;
+        }
+
+        .profile-picture-container .upload-icon:hover {
+            transform: scale(1.1);
+        }
+
+        .profile-picture-container input {
+            display: none;
+        }
+
+        .balance-info h4 {
+            font-size: 1.2rem;
+            color: #555;
+            margin-bottom: 5px;
+        }
+
+        .balance-amount {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--secondary-color);
+            margin: 10px 0;
+            transition: color 0.5s;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .motivation-quote {
+            background-color: rgba(255, 249, 230, 0.7);
+            border: 1px solid rgba(255, 193, 7, 0.3);
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 20px;
+            font-style: italic;
+            color: #795548;
+            text-align: center;
+            backdrop-filter: blur(5px);
+            box-shadow: var(--shadow-light);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .motivation-quote::before {
+            content: '"';
+            position: absolute;
+            top: 5px;
+            left: 10px;
+            font-size: 3rem;
+            color: rgba(255, 193, 7, 0.2);
+            font-family: serif;
+            line-height: 1;
+        }
+
+        .motivation-quote::after {
+            content: '"';
+            position: absolute;
+            bottom: -15px;
+            right: 10px;
+            font-size: 3rem;
+            color: rgba(255, 193, 7, 0.2);
+            font-family: serif;
+            line-height: 1;
+        }
+
+        .dashboard-menu {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-top: 25px;
+        }
+
+        .dashboard-menu .menu-btn {
+            padding: 18px;
+            background-color: rgba(255, 255, 255, 0.8);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            text-align: center;
+            font-weight: 600;
+            color: var(--primary-color);
+            text-decoration: none;
+            box-shadow: var(--shadow-light);
+            transition: all 0.3s;
+            cursor: pointer;
+            backdrop-filter: blur(5px);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .dashboard-menu .menu-btn i {
+            font-size: 1.5rem;
+            margin-bottom: 8px;
+        }
+
+        .dashboard-menu .menu-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--gradient-primary);
+            opacity: 0;
+            transition: opacity 0.3s;
+            z-index: -1;
+        }
+
+        .dashboard-menu .menu-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-medium);
+            color: white;
+        }
+
+        .dashboard-menu .menu-btn:hover::before {
+            opacity: 1;
+        }
+
+        .inactive-overlay {
+            background-color: rgba(255, 255, 255, 0.95);
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 20px;
+            border-radius: 12px;
+            z-index: 10;
+            backdrop-filter: blur(5px);
+            animation: fadeIn 0.5s;
+        }
+
+        .inactive-overlay.active {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .inactive-overlay p {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--danger-color);
+            margin-bottom: 15px;
+        }
+
+        /* Cards & Components */
+        .course-card, .vip-pack-card, .video-task-card, .support-card, .refer-card, .history-card {
+            background-color: rgba(255, 255, 255, 0.8);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 15px;
+            box-shadow: var(--shadow-light);
+            animation: fadeIn 0.5s;
+            backdrop-filter: blur(5px);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .course-card:hover, .vip-pack-card:hover, .video-task-card:hover, 
+        .support-card:hover, .refer-card:hover, .history-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-medium);
+        }
+        
+        .course-card h3, .vip-pack-card h3 {
+            font-size: 1.4rem;
+            color: var(--secondary-color);
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .vip-pack-card .price {
+            font-weight: bold;
+            color: var(--primary-color);
+            font-size: 1.2rem;
+        }
+
+        .course-card .join-btn {
+            background: var(--gradient-accent);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-block;
+            margin-top: 15px;
+            transition: all 0.3s;
+            box-shadow: 0 4px 8px rgba(76, 201, 240, 0.3);
+        }
+
+        .course-card .join-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(76, 201, 240, 0.4);
+        }
+
+        .vip-pack-card p {
+            margin-bottom: 8px;
+            color: #444;
+        }
+
+        .claim-btn, .buy-vip-btn {
+            width: 100%;
+            padding: 14px;
+            background: var(--gradient-primary);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 15px;
+            box-shadow: 0 4px 12px rgba(67, 97, 238, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .claim-btn:hover, .buy-vip-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(67, 97, 238, 0.4);
+        }
+        
+        .claim-btn.disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .back-btn {
+            background: var(--gradient-accent);
+            color: white;
+            width: 100%;
+            padding: 14px;
+            border-radius: 10px;
+            border: none;
+            margin-top: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+            box-shadow: 0 4px 12px rgba(76, 201, 240, 0.3);
+        }
+
+        .back-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(76, 201, 240, 0.4);
+        }
+
+        /* Payment Form Styles */
+        .payment-methods {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .payment-option {
+            padding: 15px;
+            border: 2px solid transparent;
+            border-radius: 10px;
+            background-color: rgba(240, 240, 240, 0.7);
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            backdrop-filter: blur(5px);
+        }
+
+        .payment-option.selected {
+            border-color: var(--primary-color);
+            background-color: rgba(233, 245, 255, 0.7);
+            box-shadow: 0 0 10px rgba(67, 97, 238, 0.3);
+        }
+
+        .payment-option input {
+            margin-right: 15px;
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+
+        .payment-info {
+            background-color: rgba(255, 243, 205, 0.7);
+            border: 1px solid rgba(255, 193, 7, 0.3);
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+            color: #856404;
+            backdrop-filter: blur(5px);
+        }
+        
+        /* Video Task Section */
+        .video-task-card {
+            text-align: center;
+        }
+        
+        .video-task-card input {
+            margin-bottom: 15px;
+        }
+
+        .video-task-card .btn {
+            width: auto;
+            padding: 12px 30px;
+            display: inline-block;
+        }
+
+        /* Referral section */
+        .refer-card {
+            text-align: center;
+        }
+
+        .referral-info {
+            background-color: rgba(226, 243, 229, 0.7);
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(46, 204, 113, 0.3);
+        }
+
+        .referral-info p {
+            font-size: 1.1rem;
+            color: var(--success-color);
+            font-weight: 600;
+        }
+
+        /* Support Section */
+        .support-card {
+            text-align: center;
+        }
+
+        .support-card h3 {
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+
+        .support-card .support-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 15px 0;
+            padding: 15px;
+            background-color: rgba(240, 240, 240, 0.7);
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            backdrop-filter: blur(5px);
+        }
+
+        .support-card .support-link.whatsapp {
+            color: #25d366;
+            border: 1px solid rgba(37, 211, 102, 0.3);
+        }
+
+        .support-card .support-link.telegram {
+            color: #0088cc;
+            border: 1px solid rgba(0, 136, 204, 0.3);
+        }
+
+        .support-card .support-link:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .support-card .support-link img {
+            width: 24px;
+            height: 24px;
+            margin-right: 10px;
+        }
+        
+        .course-submission-card {
+            background-color: rgba(227, 242, 253, 0.7);
+            border: 1px solid rgba(144, 202, 249, 0.3);
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            text-align: center;
+            backdrop-filter: blur(5px);
+        }
+
+        .course-submission-card h4 {
+            color: var(--primary-color);
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .warning-notification {
+            background-color: rgba(248, 215, 218, 0.7);
+            color: #721c24;
+            border: 1px solid rgba(245, 198, 203, 0.3);
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+            font-weight: 600;
+            text-align: center;
+            display: none;
+            animation: fadeIn 0.5s;
+            backdrop-filter: blur(5px);
+        }
+
+        /* History card styles */
+        .history-card h3 {
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .history-table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: rgba(255, 255, 255, 0.7);
+            border-radius: 8px;
+            overflow: hidden;
+            backdrop-filter: blur(5px);
+        }
+
+        .history-table th, .history-table td {
+            padding: 12px;
+            border-bottom: 1px solid var(--border-color);
+            text-align: left;
+            font-size: 0.9em;
+        }
+
+        .history-table th {
+            background-color: rgba(240, 240, 240, 0.7);
+            color: #555;
+            font-weight: 600;
+        }
+
+        .history-table tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        .history-table tbody tr:hover {
+            background-color: rgba(236, 240, 241, 0.5);
+        }
+
+        .status-success { 
+            color: var(--success-color); 
+            font-weight: 600;
+        }
+
+        .status-pending { 
+            color: var(--warning-color); 
+            font-weight: 600;
+        }
+
+        .status-failed { 
+            color: var(--danger-color); 
+            font-weight: 600;
+        }
+
+        /* Floating Particles */
+        .particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .particle {
+            position: absolute;
+            background: var(--primary-color);
+            border-radius: 50%;
+            opacity: 0.1;
+            animation: float 15s infinite linear;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0) rotate(0deg); }
+            100% { transform: translateY(-100vh) rotate(360deg); }
+        }
+
+        /* Homepage Features */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+            box-shadow: var(--shadow-light);
+            transition: all 0.3s;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .feature-card i {
+            font-size: 2rem;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        .feature-card h4 {
+            color: var(--secondary-color);
+            margin-bottom: 5px;
+        }
+
+        .feature-card p {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-medium);
+        }
+
+        /* Testimonials */
+        .testimonials {
+            margin-top: 30px;
+        }
+
+        .testimonial-card {
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 15px;
+            box-shadow: var(--shadow-light);
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .testimonial-card .quote {
+            font-style: italic;
+            margin-bottom: 10px;
+        }
+
+        .testimonial-card .author {
+            font-weight: 600;
+            color: var(--primary-color);
+            text-align: right;
+        }
+
+        /* Stats Section */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 8px;
+            padding: 10px;
+            text-align: center;
+            box-shadow: var(--shadow-light);
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .stat-card .number {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+        .stat-card .label {
+            font-size: 0.8rem;
+            color: #666;
+        }
+
+        /* Utility Classes */
+        .hidden {
+            display: none !important;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+
+            .container {
+                padding: 15px;
+                border-radius: 12px;
+            }
+
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .header p {
+                font-size: 0.9rem;
+            }
+
+            .dashboard-menu {
+                grid-template-columns: 1fr;
+            }
+
+            .dashboard-menu .menu-btn {
+                padding: 15px;
+            }
+
+            .balance-amount {
+                font-size: 2rem;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Floating Particles Background -->
+    <div class="particles" id="particles"></div>
+
+    <div class="container" id="app-container">
+        <div class="header">
+            <h1>Earn & Learn Platform</h1>
+            <p>Grow your skills and income with us!</p>
+        </div>
+
+        <div id="start-screen" class="page-section active">
+            <div class="link-text">
+                <a href="#" id="show-signup">Sign Up</a> | <a href="#" id="show-login">Login</a>
+            </div>
+
+            <div class="landing-content">
+                <h3>Why Choose Our Platform?</h3>
+                <p>We provide a comprehensive ecosystem for learning and earning. Our key features include:</p>
+                <ul>
+                    <li>Expert-Led Live Courses: Learn from industry professionals in real-time.</li>
+                    <li>Flexible Earning Opportunities: Earn money through VIP plans and daily tasks.</li>
+                    <li>Lucrative Referral System: Earn a bonus for every active user you refer.</li>
+                    <li>Dedicated 24/7 Support: Our team is always ready to help you.</li>
+                    <li>Secure & Transparent System: All your transactions and data are safe with us.</li>
+                </ul>
+
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <i class="fas fa-graduation-cap"></i>
+                        <h4>Quality Courses</h4>
+                        <p>Learn from industry experts with practical knowledge</p>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-money-bill-wave"></i>
+                        <h4>Multiple Income</h4>
+                        <p>Earn from multiple sources with our platform</p>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-users"></i>
+                        <h4>Community</h4>
+                        <p>Join our growing community of learners</p>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-headset"></i>
+                        <h4>24/7 Support</h4>
+                        <p>Get help whenever you need it</p>
+                    </div>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="number">500+</div>
+                        <div class="label">Active Users</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="number">৳50K+</div>
+                        <div class="label">Paid Out</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="number">20+</div>
+                        <div class="label">Courses</div>
+                    </div>
+                </div>
+
+                <div class="testimonials">
+                    <h4>What Our Users Say</h4>
+                    <div class="testimonial-card">
+                        <div class="quote">"This platform changed my life. I learned new skills and now earn a steady income."</div>
+                        <div class="author">- Rahim, Dhaka</div>
+                    </div>
+                    <div class="testimonial-card">
+                        <div class="quote">"The support team is amazing. They helped me at every step of my journey."</div>
+                        <div class="author">- Fatema, Chittagong</div>
+                    </div>
+                </div>
+
+                <p style="margin-top: 20px; font-weight: 600; color: var(--primary-color);">Join us today and unlock your potential!</p>
+            </div>
+        </div>
+
+        <div id="signup-form" class="page-section">
+            <h2>Create Account</h2>
+            <div class="input-group">
+                <label for="signup-name">Full Name</label>
+                <input type="text" id="signup-name" placeholder="Enter your full name" required>
+            </div>
+            <div class="input-group">
+                <label for="signup-phone">WhatsApp Number (Login ID)</label>
+                <input type="tel" id="signup-phone" placeholder="Your WhatsApp number" required>
+            </div>
+            <div class="input-group">
+                <label for="signup-email">Email</label>
+                <input type="email" id="signup-email" placeholder="Enter your email" required>
+            </div>
+            <div class="input-group">
+                <label for="signup-password">Password</label>
+                <input type="password" id="signup-password" placeholder="Choose a password" required>
+            </div>
+            <div class="input-group">
+                <label for="signup-country">Select Your Country</label>
+                <select id="signup-country" required>
+                    <option value="" disabled selected>Select a Country</option>
+                    <option value="Bangladesh" data-currency="৳">Bangladesh</option>
+                    <option value="India" data-currency="₹">India</option>
+                    <option value="Pakistan" data-currency="Rs">Pakistan</option>
+                    <option value="USA" data-currency="$">USA</option>
+                    <option value="UK" data-currency="£">UK</option>
+                    <option value="Other" data-currency="$">Other</option>
+                </select>
+            </div>
+            <div class="input-group">
+                <label for="signup-telegram">Telegram Username (Optional)</label>
+                <input type="text" id="signup-telegram" placeholder="@your_telegram_username">
+            </div>
+            <div class="input-group">
+                <label>Contact Support Team via:</label>
+                <div style="display: flex; gap: 10px;">
+                    <label><input type="checkbox" id="send-to-whatsapp" checked> WhatsApp</label>
+                    <label><input type="checkbox" id="send-to-telegram"> Telegram</label>
+                </div>
+            </div>
+            <button class="btn" onclick="signUp()">Create Account</button>
+            <div class="link-text">
+                <a href="#" id="back-to-start-signup">Back to Home</a>
+            </div>
+        </div>
+
+        <div id="login-form" class="page-section">
+            <h2>Welcome Back</h2>
+            <div class="input-group">
+                <label for="login-phone">Phone Number</label>
+                <input type="tel" id="login-phone" placeholder="Enter your phone number" required>
+            </div>
+            <div class="input-group">
+                <label for="login-password">Password</label>
+                <input type="password" id="login-password" placeholder="Enter your password" required>
+            </div>
+            <button class="btn" onclick="login()">Login</button>
+            <div class="link-text">
+                <a href="#" id="back-to-start-login">Back to Home</a>
+            </div>
+        </div>
+
+        <div id="dashboard-screen" class="page-section">
+            <div class="notification-bar" id="notification-bar">
+                <ul id="notification-feed"></ul>
+            </div>
+            <div class="inactive-overlay" id="inactive-overlay">
+                <p>Your account is Inactive.</p>
+                <p>Please activate your ID to access all features and start earning.</p>
+                <button class="btn" id="activate-now-btn">Activate My ID Now</button>
+            </div>
+            <div class="user-info">
+                <div class="profile-picture-container" onclick="document.getElementById('profile-picture-upload').click()">
+                    <img src="https://via.placeholder.com/100" alt="Profile Picture" class="profile-picture" id="profile-picture-display">
+                    <div class="upload-icon">+</div>
+                    <input type="file" id="profile-picture-upload" accept="image/*" onchange="uploadProfilePicture()">
+                </div>
+                <h3>Welcome, <span id="dashboard-name"></span><span id="verified-badge" class="verified-badge hidden"><i class="fas fa-check-circle"></i></span>!</h3>
+                <p id="account-status">Status: <span style="font-weight: 600; color: red;">Inactive</span></p>
+                <p id="referral-count">Referrals: <span style="font-weight: 600;">0</span></p>
+            </div>
+            <div class="balance-info">
+                <h4>Current Balance</h4>
+                <div class="balance-amount"><span id="currency-symbol-balance">৳</span> <span id="current-balance">0</span></div>
+            </div>
+            <div class="motivation-quote" id="motivation-quote-display">
+                "The secret of getting ahead is getting started."
+            </div>
+            <div class="dashboard-menu">
+                <div class="menu-btn" id="profile-btn">
+                    <i class="fas fa-user"></i>
+                    Profile
+                </div>
+                <div class="menu-btn" id="add-balance-btn">
+                    <i class="fas fa-wallet"></i>
+                    Add Balance
+                </div>
+                <div class="menu-btn" id="withdraw-balance-btn">
+                    <i class="fas fa-money-bill-wave"></i>
+                    Withdraw
+                </div>
+                <div class="menu-btn" id="courses-btn">
+                    <i class="fas fa-book"></i>
+                    Courses
+                </div>
+                <div class="menu-btn" id="earning-btn">
+                    <i class="fas fa-coins"></i>
+                    Earning
+                </div>
+                <div class="menu-btn" id="refer-btn">
+                    <i class="fas fa-user-plus"></i>
+                    Refer & Earn
+                </div>
+                <div class="menu-btn" id="support-btn">
+                    <i class="fas fa-headset"></i>
+                    Support
+                </div>
+                <div class="menu-btn" id="history-btn">
+                    <i class="fas fa-history"></i>
+                    History
+                </div>
+            </div>
+            <button class="btn" onclick="logout()">Logout</button>
+        </div>
+
+        <div id="profile-page" class="page-section">
+            <h2>My Profile</h2>
+            <div class="input-group">
+                <label for="profile-name">Name</label>
+                <input type="text" id="profile-name">
+            </div>
+            <div class="input-group">
+                <label for="profile-phone">Phone Number</label>
+                <input type="tel" id="profile-phone" disabled>
+            </div>
+            <div class="input-group">
+                <label for="profile-email">Email</label>
+                <input type="email" id="profile-email">
+            </div>
+            <div class="input-group">
+                <label for="profile-country">Country</label>
+                <input type="text" id="profile-country" disabled>
+            </div>
+            <div class="input-group">
+                <label>Account Status</label>
+                <div style="display: flex; align-items: center; gap: 5px;">
+                    <span id="profile-status">Inactive</span>
+                    <span id="profile-verified-badge" class="verified-badge hidden"><i class="fas fa-check-circle"></i></span>
+                </div>
+            </div>
+            <div class="input-group">
+                <label>Referral Count</label>
+                <div id="profile-referral-count">0</div>
+            </div>
+            <button class="btn" onclick="updateProfile()">Update Profile</button>
+            <button class="back-btn" onclick="showDashboard()">Back to Dashboard</button>
+        </div>
+
+        <div id="add-balance-page" class="page-section">
+            <h2>Add Funds</h2>
+            <div class="input-group">
+                <label for="add-amount">Amount (<span id="currency-symbol-add">৳</span>)</label>
+                <input type="number" id="add-amount" placeholder="Amount to add" required>
+            </div>
+            <div class="input-group">
+                <label for="payment-country-add">Your Country</label>
+                <select id="payment-country-add">
+                    <option value="Bangladesh" data-currency="৳" selected>Bangladesh</option>
+                    <option value="India" data-currency="₹">India</option>
+                    <option value="Pakistan" data-currency="Rs">Pakistan</option>
+                    <option value="USA" data-currency="$">USA</option>
+                    <option value="UK" data-currency="£">UK</option>
+                    <option value="Other" data-currency="$">Other</option>
+                </select>
+            </div>
+
+            <div id="payment-methods-bd-add" class="payment-methods">
+                <label style="font-weight: 600; margin-bottom: 10px;">Payment Method (Bangladesh)</label>
+                <div class="payment-option" onclick="selectPaymentMethod('bKash_add', 'add')">
+                    <input type="radio" name="payment-method-add" id="bKash_add" value="bKash">
+                    <label for="bKash_add">bKash</label>
+                </div>
+                <div class="payment-option" onclick="selectPaymentMethod('Nagad_add', 'add')">
+                    <input type="radio" name="payment-method-add" id="Nagad_add" value="Nagad">
+                    <label for="Nagad_add">Nagad</label>
+                </div>
+                <div class="payment-option" onclick="selectPaymentMethod('Rocket_add', 'add')">
+                    <input type="radio" name="payment-method-add" id="Rocket_add" value="Rocket">
+                    <label for="Rocket_add">Rocket</label>
+                </div>
+                <div class="payment-option" onclick="selectPaymentMethod('Upay_add', 'add')">
+                    <input type="radio" name="payment-method-add" id="Upay_add" value="Upay">
+                    <label for="Upay_add">Upay</label>
+                </div>
+            </div>
+
+            <div id="payment-methods-other-add" class="payment-methods hidden">
+                <label style="font-weight: 600; margin-bottom: 10px;">Payment Methods (International)</label>
+                <div class="payment-option" onclick="selectPaymentMethod('Binance_add', 'add')">
+                    <input type="radio" name="payment-method-add" id="Binance_add" value="Binance">
+                    <label for="Binance_add">Binance Pay (USD)</label>
+                </div>
+                <div class="payment-option" onclick="selectPaymentMethod('PayPal_add', 'add')">
+                    <input type="radio" name="payment-method-add" id="PayPal_add" value="PayPal">
+                    <label for="PayPal_add">PayPal (USD)</label>
+                </div>
+            </div>
+
+            <div class="payment-info" id="payment-info-box-add">
+                <p><strong>Payment Number (Send Money):</strong> 01618588307</p>
+                <p class="hidden"><strong>PayPal Account:</strong> muradevattt@gmail.com</p>
+                <p class="hidden"><strong>Binance Pay ID:</strong> 1095739872</p>
+                <p style="margin-top: 10px;">After completing your payment, enter the transaction ID below.</p>
+            </div>
+
+            <div class="input-group">
+                <label for="transaction-id-add">Transaction ID</label>
+                <input type="text" id="transaction-id-add" placeholder="Enter your transaction ID" required>
+            </div>
+            <button class="btn" onclick="submitAddBalance()">Submit Payment</button>
+            <button class="back-btn" onclick="showDashboard()">Back to Dashboard</button>
+        </div>
+
+        <div id="withdraw-page" class="page-section">
+            <h2>Withdraw Funds</h2>
+            <div class="input-group">
+                <label for="withdraw-amount">Amount (<span id="currency-symbol-withdraw">৳</span>)</label>
+                <input type="number" id="withdraw-amount" placeholder="Amount to withdraw" required>
+            </div>
+            <div class="input-group">
+                <label for="withdraw-method">Method</label>
+                <select id="withdraw-method">
+                    <option value="bKash">bKash</option>
+                    <option value="Nagad">Nagad</option>
+                    <option value="Rocket">Rocket</option>
+                    <option value="Upay">Upay</option>
+                </select>
+            </div>
+            <div class="input-group">
+                <label for="withdraw-number">Account Number</label>
+                <input type="text" id="withdraw-number" placeholder="Your account number" required>
+            </div>
+            <button class="btn" onclick="withdrawBalance()">Request Withdrawal</button>
+            <button class="back-btn" onclick="showDashboard()">Back to Dashboard</button>
+        </div>
+
+        <div id="courses-page" class="page-section">
+            <h2>Available Courses</h2>
+            <div class="course-list" id="course-list">
+                <!-- Courses will be dynamically added here -->
+            </div>
+            <div class="course-submission-card">
+                <h4>Suggest a New Course</h4>
+                <p>Don't see a course you like? Tell us what you want to learn!</p>
+                <button class="btn" onclick="suggestCourse('whatsapp')">Suggest via WhatsApp</button>
+                <button class="btn" onclick="suggestCourse('telegram')">Suggest via Telegram</button>
+            </div>
+            <button class="back-btn" onclick="showDashboard()">Back to Dashboard</button>
+        </div>
+        
+        <div id="earning-page" class="page-section">
+            <h2>Earning Options</h2>
+            <div class="vip-packs-section">
+                <h3>VIP Earning Plans</h3>
+                
+                <div class="vip-pack-card">
+                    <h3>🌟 Mini Membership – Trial Pack</h3>
+                    <p class="price">💰 Investment: <span id="price-trial">৳5</span></p>
+                    <p>📅 Duration: 1 Day</p>
+                    <p>💵 Total Income: <span id="income-trial">৳6</span></p>
+                    <p>📈 Daily Income: <span id="daily-income-trial">৳6</span></p>
+                    <button class="claim-btn buy-vip-btn" data-plan="trial" data-price-bdt="5" data-daily-income-bdt="6">Buy Now</button>
+                </div>
+                
+                <div class="vip-pack-card">
+                    <h3>🌟 Premium Membership – Bronze Pack</h3>
+                    <p class="price">💰 Investment: <span id="price-bronze">৳300</span></p>
+                    <p>📅 Duration: 30 Days</p>
+                    <p>💵 Total Income: <span id="income-bronze">৳350+</span></p>
+                    <p>📈 Daily Income: <span id="daily-income-bronze">৳11.67</span></p>
+                    <button class="claim-btn buy-vip-btn" data-plan="bronze" data-price-bdt="300" data-daily-income-bdt="11.67">Buy Now</button>
+                </div>
+
+                <div class="vip-pack-card">
+                    <h3>🌟 Premium Membership – Silver Pack</h3>
+                    <p class="price">💰 Investment: <span id="price-silver">৳500</span></p>
+                    <p>📅 Duration: 30 Days</p>
+                    <p>💵 Total Income: <span id="income-silver">৳600+</span></p>
+                    <p>📈 Daily Income: <span id="daily-income-silver">৳20</span></p>
+                    <button class="claim-btn buy-vip-btn" data-plan="silver" data-price-bdt="500" data-daily-income-bdt="20">Buy Now</button>
+                </div>
+                
+                <div class="vip-pack-card">
+                    <h3>🌟 Premium Membership – Gold Pack</h3>
+                    <p class="price">💰 Investment: <span id="price-gold">৳1000</span></p>
+                    <p>📅 Duration: 30 Days</p>
+                    <p>💵 Total Income: <span id="income-gold">৳1150+</span></p>
+                    <p>📈 Daily Income: <span id="daily-income-gold">৳38.33</span></p>
+                    <button class="claim-btn buy-vip-btn" data-plan="gold" data-price-bdt="1000" data-daily-income-bdt="38.33">Buy Now</button>
+                </div>
+
+                <div class="vip-pack-card">
+                    <h3>🌟 Premium Membership – Platinum Pack</h3>
+                    <p class="price">💰 Investment: <span id="price-platinum">৳2000</span></p>
+                    <p>📅 Duration: 30 Days</p>
+                    <p>💵 Total Income: <span id="income-platinum">৳2200+</span></p>
+                    <p>📈 Daily Income: <span id="daily-income-platinum">৳73.33</span></p>
+                    <button class="claim-btn buy-vip-btn" data-plan="platinum" data-price-bdt="2000" data-daily-income-bdt="73.33">Buy Now</button>
+                </div>
+            </div>
+
+            <hr style="margin: 30px 0; border-color: #e0e0e0;">
+            <div class="daily-income-section">
+                <h3>Daily Earning</h3>
+                <div class="vip-pack-card">
+                    <h4>Daily VIP Income</h4>
+                    <p id="vip-income-amount">Daily Claimable: <span id="currency-symbol-vip">৳</span><span id="claimable-vip-amount">0</span></p>
+                    <button class="claim-btn" id="claim-vip-income-btn">Claim VIP Income</button>
+                    <p id="vip-claim-timer" style="font-size: 0.9em; color: #777; margin-top: 10px;"></p>
+                </div>
+                <div class="vip-pack-card">
+                    <h4>Daily Free Income</h4>
+                    <p>Daily Claimable: <span id="currency-symbol-free">৳</span><span id="free-income-amount">1-2</span></p>
+                    <button class="claim-btn" id="claim-free-income-btn">Claim Free Income (<span id="claim-free-btn-amount">৳1</span>)</button>
+                    <p id="free-claim-timer" style="font-size: 0.9em; color: #777; margin-top: 10px;"></p>
+                </div>
+            </div>
+
+            <hr style="margin: 30px 0; border-color: #e0e0e0;">
+            <div class="video-task-card">
+                <h3>Video Upload Task</h3>
+                <p>Earn by creating videos about our company.</p>
+                <div class="input-group" style="margin-top: 15px;">
+                    <label for="video-link">YouTube/Facebook Video Link</label>
+                    <input type="url" id="video-link" placeholder="Paste your video link" required>
+                </div>
+                <button class="btn" onclick="submitVideoLink()">Submit Video</button>
+                <div class="warning-notification" id="video-warning">
+                    Warning: Please use appropriate language in your video. Any abusive content will lead to a penalty.
+                </div>
+            </div>
+
+            <button class="back-btn" onclick="showDashboard()">Back to Dashboard</button>
+        </div>
+
+        <div id="refer-page" class="page-section">
+            <h2>Refer & Earn</h2>
+            <div class="refer-card">
+                <h3>Your Referral ID</h3>
+                <div class="referral-info">
+                    <p>Your unique Referral ID is: <br> <span id="referral-id" style="font-size: 1.5rem; font-weight: 600; color: var(--primary-color);">Generating...</span></p>
+                    <button class="btn" onclick="copyToClipboard('referral-id')">Copy ID</button>
+                </div>
+
+                <h3 style="margin-top: 30px;">Referral Bonus Submission</h3>
+                <p>Enter the ID of the person you referred. If their account is active, you will receive a bonus.</p>
+                <div class="input-group" style="margin-top: 20px;">
+                    <label for="referred-id">Referred User's ID</label>
+                    <input type="text" id="referred-id" placeholder="Enter the ID of the referred user" required>
+                </div>
+                <button class="btn" onclick="submitReferral()">Submit Referral</button>
+            </div>
+            <button class="back-btn" onclick="showDashboard()">Back to Dashboard</button>
+        </div>
+        
+        <div id="support-page" class="page-section">
+            <h2>Support Team</h2>
+            <div class="support-card">
+                <h3>Contact Us</h3>
+                <p>For any questions or issues, please contact our support team.</p>
+                <a href="https://wa.me/8801618588307?text=Hello%20Support%20Team%2C%20I%20need%20assistance%20with..." target="_blank" class="support-link whatsapp">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp">
+                    WhatsApp Support
+                </a>
+                <a href="https://t.me/MTS_Support_Teama" target="_blank" class="support-link telegram">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" alt="Telegram">
+                    Telegram Support
+                </a>
+            </div>
+            <button class="back-btn" onclick="showDashboard()">Back to Dashboard</button>
+        </div>
+
+        <div id="history-page" class="page-section">
+            <h2>Transaction History</h2>
+            <div class="history-card">
+                <h3>Deposit History</h3>
+                <table class="history-table">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Amount</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="deposit-history-table-body">
+                        <!-- Deposit history will be added here -->
+                    </tbody>
+                </table>
+            </div>
+            <div class="history-card" style="margin-top: 20px;">
+                <h3>Withdrawal History</h3>
+                <table class="history-table">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Amount</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="withdrawal-history-table-body">
+                        <!-- Withdrawal history will be added here -->
+                    </tbody>
+                </table>
+            </div>
+            <div class="history-card" style="margin-top: 20px;">
+                <h3>Referral History</h3>
+                <table class="history-table">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Referred ID</th>
+                            <th>Bonus</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="referral-history-table-body">
+                        <!-- Referral history will be added here -->
+                    </tbody>
+                </table>
+            </div>
+            <button class="back-btn" onclick="showDashboard()">Back to Dashboard</button>
+        </div>
+
+        <div id="activation-form" class="page-section">
+            <h2>ID Activation</h2>
+            <p style="text-align: center; margin-bottom: 20px;">Activate your ID for <strong><span id="activation-fee-display">৳250 BDT</span></strong>.</p>
+
+            <div class="input-group">
+                <label for="payment-country-activate">Your Country</label>
+                <select id="payment-country-activate">
+                    <option value="Bangladesh" data-currency="৳" selected>Bangladesh</option>
+                    <option value="India" data-currency="₹">India</option>
+                    <option value="Pakistan" data-currency="Rs">Pakistan</option>
+                    <option value="USA" data-currency="$">USA</option>
+                    <option value="UK" data-currency="£">UK</option>
+                    <option value="Other" data-currency="$">Other</option>
+                </select>
+            </div>
+
+            <div id="payment-methods-bd-activate" class="payment-methods">
+                <label style="font-weight: 600; margin-bottom: 10px;">Payment Method (Bangladesh)</label>
+                <div class="payment-option" onclick="selectPaymentMethod('bKash_activate', 'activate')">
+                    <input type="radio" name="payment-method-activate" id="bKash_activate" value="bKash">
+                    <label for="bKash_activate">bKash</label>
+                </div>
+                <div class="payment-option" onclick="selectPaymentMethod('Nagad_activate', 'activate')">
+                    <input type="radio" name="payment-method-activate" id="Nagad_activate" value="Nagad">
+                    <label for="Nagad_activate">Nagad</label>
+                </div>
+                <div class="payment-option" onclick="selectPaymentMethod('Rocket_activate', 'activate')">
+                    <input type="radio" name="payment-method-activate" id="Rocket_activate" value="Rocket">
+                    <label for="Rocket_activate">Rocket</label>
+                </div>
+                <div class="payment-option" onclick="selectPaymentMethod('Upay_activate', 'activate')">
+                    <input type="radio" name="payment-method-activate" id="Upay_activate" value="Upay">
+                    <label for="Upay_activate">Upay</label>
+                </div>
+            </div>
+
+            <div id="payment-methods-other-activate" class="payment-methods hidden">
+                <label style="font-weight: 600; margin-bottom: 10px;">Payment Methods (International)</label>
+                <div class="payment-option" onclick="selectPaymentMethod('Binance_activate', 'activate')">
+                    <input type="radio" name="payment-method-activate" id="Binance_activate" value="Binance">
+                    <label for="Binance_activate">Binance Pay (USD)</label>
+                </div>
+                <div class="payment-option" onclick="selectPaymentMethod('PayPal_activate', 'activate')">
+                    <input type="radio" name="payment-method-activate" id="PayPal_activate" value="PayPal">
+                    <label for="PayPal_activate">PayPal (USD)</label>
+                </div>
+            </div>
+
+            <div class="payment-info" id="payment-info-box-activate">
+                <p><strong>Payment Number (Send Money):</strong> 01618588307</p>
+                <p><strong>PayPal Account:</strong> muradevattt@gmail.com</p>
+                <p><strong>Binance Pay ID:</strong> 1095739872</p>
+                <p><strong>Payment Amount:</strong> <span id="payment-amount-display">৳250 BDT</span></p>
+                <p style="margin-top: 10px;">After completing your payment, enter the transaction ID below.</p>
+            </div>
+
+            <div class="input-group">
+                <label for="transaction-id-activate">Transaction ID</label>
+                <input type="text" id="transaction-id-activate" placeholder="Enter your transaction ID" required>
+            </div>
+            <button class="btn" onclick="submitActivation()">Submit Activation</button>
+            <button class="back-btn" onclick="showDashboard()">Back to Dashboard</button>
+        </div>
+    </div>
+
+    <script>
+        // DOM Elements
+        const startScreen = document.getElementById('start-screen');
+        const signupForm = document.getElementById('signup-form');
+        const loginForm = document.getElementById('login-form');
+        const dashboardScreen = document.getElementById('dashboard-screen');
+        const inactiveOverlay = document.getElementById('inactive-overlay');
+        const activateNowBtn = document.getElementById('activate-now-btn');
+        const activationForm = document.getElementById('activation-form');
+        const addBalancePage = document.getElementById('add-balance-page');
+        const profilePage = document.getElementById('profile-page');
+        const withdrawPage = document.getElementById('withdraw-page');
+        const coursesPage = document.getElementById('courses-page');
+        const earningPage = document.getElementById('earning-page');
+        const referPage = document.getElementById('refer-page');
+        const supportPage = document.getElementById('support-page');
+        const historyPage = document.getElementById('history-page');
+        const courseList = document.getElementById('course-list');
+        const notificationBar = document.getElementById('notification-bar');
+        const notificationFeed = document.getElementById('notification-feed');
+        const motivationQuoteDisplay = document.getElementById('motivation-quote-display');
+        const videoWarning = document.getElementById('video-warning');
+        const depositHistoryTableBody = document.getElementById('deposit-history-table-body');
+        const withdrawalHistoryTableBody = document.getElementById('withdrawal-history-table-body');
+        const referralHistoryTableBody = document.getElementById('referral-history-table-body');
+        const particlesContainer = document.getElementById('particles');
+        const verifiedBadge = document.getElementById('verified-badge');
+        const profileVerifiedBadge = document.getElementById('profile-verified-badge');
+        const profileStatus = document.getElementById('profile-status');
+        const referralCountDisplay = document.getElementById('referral-count').querySelector('span');
+        const profileReferralCountDisplay = document.getElementById('profile-referral-count');
+
+        // Buttons and links
+        const showSignupLink = document.getElementById('show-signup');
+        const showLoginLink = document.getElementById('show-login');
+        const backToStartSignupLink = document.getElementById('back-to-start-signup');
+        const backToStartLoginLink = document.getElementById('back-to-start-login');
+        const profileBtn = document.getElementById('profile-btn');
+        const addBalanceBtn = document.getElementById('add-balance-btn');
+        const withdrawBtn = document.getElementById('withdraw-balance-btn');
+        const coursesBtn = document.getElementById('courses-btn');
+        const earningBtn = document.getElementById('earning-btn');
+        const referBtn = document.getElementById('refer-btn');
+        const supportBtn = document.getElementById('support-btn');
+        const historyBtn = document.getElementById('history-btn');
+
+        const claimVipBtn = document.getElementById('claim-vip-income-btn');
+        const claimFreeBtn = document.getElementById('claim-free-income-btn');
+        const paymentCountryActivateSelect = document.getElementById('payment-country-activate');
+        const paymentCountryAddSelect = document.getElementById('payment-country-add');
+        const signupCountrySelect = document.getElementById('signup-country');
+
+        // Currency conversion rates (1 BDT = X currency)
+        const exchangeRates = {
+            'Bangladesh': { symbol: '৳', rate: 1 },
+            'India': { symbol: '₹', rate: 0.71 },
+            'Pakistan': { symbol: 'Rs', rate: 0.40 },
+            'USA': { symbol: '$', rate: 0.0085 },
+            'UK': { symbol: '£', rate: 0.0068 },
+            'Other': { symbol: '$', rate: 0.0085 }
+        };
+        
+        // Base prices for VIP plans
+        const basePrices = {
+            activation: 250, // BDT
+            referralBonus: 50, // BDT
+            dailyFree: 1, // BDT
+            vip: {
+                trial: { price: 5, daily: 6, total: 6 },
+                bronze: { price: 300, daily: 11.67, total: 350 },
+                silver: { price: 500, daily: 20, total: 600 },
+                gold: { price: 1000, daily: 38.33, total: 1150 },
+                platinum: { price: 2000, daily: 73.33, total: 2200 }
+            }
+        };
+
+        // User data (simulated with an object, using phone number as key)
+        let currentUser = null;
+        let userData = JSON.parse(localStorage.getItem('userData')) || {};
+        let usedTransactionIds = JSON.parse(localStorage.getItem('usedTransactionIds')) || [];
+        let referralBonusesClaimed = JSON.parse(localStorage.getItem('referralBonusesClaimed')) || {};
+
+        // Course data with links
+        const courses = [
+            { name: "Digital Marketing", desc: "Learn to market products and services online.", link: "meet.google.com/yzc-wjtn-djo" },
+            { name: "Web Development", desc: "Build stunning and responsive websites.", link: "meet.google.com/wus-faey-ghh" },
+            { name: "Photo Editing", desc: "Master photo editing with professional tools.", link: "meet.google.com/ntz-dkmg-ixo" },
+            { name: "Video Editing", desc: "Create and edit high-quality videos.", link: "meet.google.com/tqv-stuj-qwa" },
+            { name: "Email Marketing", desc: "Learn to build effective email campaigns.", link: "meet.google.com/mst-iwkz-qtr" },
+            { name: "Lead Generation", desc: "Strategies for finding and attracting potential customers.", link: "meet.google.com/xha-ksnr-qrz" },
+            { name: "Social Media Management", desc: "Manage social media platforms for brands.", link: "meet.google.com/xxe-twpx-ngm" },
+            { name: "Content Writing", desc: "Create engaging and effective written content.", link: "meet.google.com/qgm-kjki-hbz" },
+            { name: "SEO Optimization", desc: "Improve website ranking on search engines.", link: "meet.google.com/ajm-gzmp-bzz" },
+            { name: "Graphics Design", desc: "Design visually appealing graphics.", link: "meet.google.com/omb-dxvm-bdb" },
+            { name: "WordPress Development", desc: "Build websites using WordPress.", link: "meet.google.com/ajm-gzmp-bzz" },
+            { name: "E-commerce Business", desc: "Start and manage an online store.", link: "meet.google.com/ohj-pxwe-ntp" },
+            { name: "Affiliate Marketing", desc: "Earn commissions by promoting products.", link: "meet.google.com/rbh-sxtb-gdb" },
+            { name: "UI/UX Design", desc: "Design user-friendly interfaces.", link: "meet.google.com/zqt-ezwm-wgf" },
+            { name: "Data Entry", desc: "Learn to manage and enter data efficiently.", link: "meet.google.com/gnx-zqgd-fdv" },
+            { name: "Virtual Assistant", desc: "Provide administrative support remotely.", link: "meet.google.com/gud-dbgp-uoy" },
+            { name: "Customer Service", desc: "Master communication and client support skills.", link: "meet.google.com/xmg-mhff-iof" }
+        ];
+        
+        const quotes = [
+            "The secret of getting ahead is getting started.",
+            "The best way to predict the future is to create it.",
+            "Success is not final, failure is not fatal: it is the courage to continue that counts.",
+            "Believe you can and you're halfway there.",
+            "The future belongs to those who believe in the beauty of their dreams.",
+            "Don't watch the clock; do what it does. Keep going."
+        ];
+        
+        let notificationInterval;
+
+        // Create floating particles
+        function createParticles() {
+            const particleCount = 30;
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                
+                // Random size between 2px and 8px
+                const size = Math.random() * 6 + 2;
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                
+                // Random position
+                particle.style.left = `${Math.random() * 100}%`;
+                particle.style.top = `${Math.random() * 100}%`;
+                
+                // Random animation duration between 10s and 30s
+                const duration = Math.random() * 20 + 10;
+                particle.style.animationDuration = `${duration}s`;
+                
+                // Random delay
+                particle.style.animationDelay = `${Math.random() * 10}s`;
+                
+                // Random opacity
+                particle.style.opacity = Math.random() * 0.2 + 0.05;
+                
+                particlesContainer.appendChild(particle);
+            }
+        }
+
+        // UI state management
+        const allSections = document.querySelectorAll('.page-section');
+
+        function hideAllSections() {
+            allSections.forEach(section => section.classList.remove('active'));
+        }
+
+        function showSection(section) {
+            hideAllSections();
+            section.classList.add('active');
+        }
+
+        function updateDashboard() {
+            if (currentUser) {
+                // Update currency symbol
+                const currency = exchangeRates[currentUser.country] || exchangeRates['Other'];
+                const symbol = currency.symbol;
+                
+                document.getElementById('currency-symbol-balance').textContent = symbol;
+                document.getElementById('currency-symbol-add').textContent = symbol;
+                document.getElementById('currency-symbol-withdraw').textContent = symbol;
+                document.getElementById('currency-symbol-vip').textContent = symbol;
+                document.getElementById('currency-symbol-free').textContent = symbol;
+
+                // Convert balance to user's currency
+                const convertedBalance = currentUser.balance * currency.rate;
+                
+                document.getElementById('dashboard-name').textContent = currentUser.name;
+                document.getElementById('current-balance').textContent = convertedBalance.toFixed(2);
+                
+                document.getElementById('referral-id').textContent = currentUser.referralId || 'Generating...';
+
+                const statusText = document.getElementById('account-status').querySelector('span');
+                
+                // Update profile picture
+                const profilePic = document.getElementById('profile-picture-display');
+                if (currentUser.profilePic) {
+                    profilePic.src = currentUser.profilePic;
+                } else {
+                    profilePic.src = 'https://via.placeholder.com/100';
+                }
+
+                // Update verified badge
+                if (currentUser.isVerified) {
+                    verifiedBadge.classList.remove('hidden');
+                    profileVerifiedBadge.classList.remove('hidden');
+                    profileStatus.textContent = 'Verified';
+                    profileStatus.style.color = '#28a745';
+                } else {
+                    verifiedBadge.classList.add('hidden');
+                    profileVerifiedBadge.classList.add('hidden');
+                    profileStatus.textContent = 'Not Verified';
+                    profileStatus.style.color = '#6c757d';
+                }
+
+                // Update referral count
+                const referralCount = currentUser.referrals ? currentUser.referrals.length : 0;
+                referralCountDisplay.textContent = referralCount;
+                profileReferralCountDisplay.textContent = referralCount;
+
+                if (currentUser.isActive) {
+                    statusText.textContent = 'Active';
+                    statusText.style.color = '#28a745';
+                    inactiveOverlay.classList.remove('active');
+                } else {
+                    statusText.textContent = 'Inactive';
+                    statusText.style.color = 'red';
+                    inactiveOverlay.classList.add('active');
+                }
+                saveUserData();
+            }
+        }
+        
+        // Dynamic pricing updates
+        function updatePrices(country) {
+            const currency = exchangeRates[country] || exchangeRates['Other'];
+            const symbol = currency.symbol;
+            const rate = currency.rate;
+
+            // Update Activation Fee
+            const activationFee = (basePrices.activation * rate).toFixed(2);
+            document.getElementById('activation-fee-display').textContent = `${symbol}${activationFee} ${country === 'Bangladesh' ? 'BDT' : ''}`;
+            document.getElementById('payment-amount-display').textContent = `${symbol}${activationFee} ${country === 'Bangladesh' ? 'BDT' : ''}`;
+
+            // Update VIP Prices and total income
+            for (const plan in basePrices.vip) {
+                const price = (basePrices.vip[plan].price * rate).toFixed(2);
+                const daily = (basePrices.vip[plan].daily * rate).toFixed(2);
+                const totalIncome = (basePrices.vip[plan].total * rate).toFixed(2);
+                
+                document.getElementById(`price-${plan}`).textContent = `${symbol}${price}`;
+                document.getElementById(`income-${plan}`).textContent = `${symbol}${totalIncome}+`;
+                document.getElementById(`daily-income-${plan}`).textContent = `${symbol}${daily}`;
+            }
+
+            // Update daily free income button text
+            const freeIncomeAmount = (basePrices.dailyFree * rate).toFixed(2);
+            document.getElementById('claim-free-btn-amount').textContent = `${symbol}${freeIncomeAmount}`;
+            document.getElementById('free-income-amount').textContent = `${symbol}${(1 * rate).toFixed(2)}-${(2 * rate).toFixed(2)}`;
+        }
+
+        function populateHistoryTables() {
+            if (!currentUser) return;
+
+            const currency = exchangeRates[currentUser.country] || exchangeRates['Other'];
+            const symbol = currency.symbol;
+
+            // Populate Deposit History
+            depositHistoryTableBody.innerHTML = '';
+            if (currentUser.depositHistory && currentUser.depositHistory.length > 0) {
+                currentUser.depositHistory.forEach(item => {
+                    const row = `
+                        <tr>
+                            <td>${new Date(item.date).toLocaleDateString()}</td>
+                            <td>${symbol}${(item.amount * currency.rate).toFixed(2)}</td>
+                            <td class="status-${item.status.toLowerCase()}">${item.status}</td>
+                        </tr>
+                    `;
+                    depositHistoryTableBody.innerHTML += row;
+                });
+            } else {
+                depositHistoryTableBody.innerHTML = '<tr><td colspan="3" style="text-align: center; color: #888;">No deposit history found.</td></tr>';
+            }
+            
+            // Populate Withdrawal History
+            withdrawalHistoryTableBody.innerHTML = '';
+            if (currentUser.withdrawalHistory && currentUser.withdrawalHistory.length > 0) {
+                currentUser.withdrawalHistory.forEach(item => {
+                    const row = `
+                        <tr>
+                            <td>${new Date(item.date).toLocaleDateString()}</td>
+                            <td>${symbol}${(item.amount * currency.rate).toFixed(2)}</td>
+                            <td class="status-${item.status.toLowerCase()}">${item.status}</td>
+                        </tr>
+                    `;
+                    withdrawalHistoryTableBody.innerHTML += row;
+                });
+            } else {
+                withdrawalHistoryTableBody.innerHTML = '<tr><td colspan="3" style="text-align: center; color: #888;">No withdrawal history found.</td></tr>';
+            }
+            
+            // Populate Referral History
+            referralHistoryTableBody.innerHTML = '';
+            if (currentUser.referrals && currentUser.referrals.length > 0) {
+                currentUser.referrals.forEach(item => {
+                    const row = `
+                        <tr>
+                            <td>${new Date(item.date).toLocaleDateString()}</td>
+                            <td>${item.id}</td>
+                            <td>${symbol}${(basePrices.referralBonus * currency.rate).toFixed(2)}</td>
+                            <td class="status-${item.status.toLowerCase()}">${item.status}</td>
+                        </tr>
+                    `;
+                    referralHistoryTableBody.innerHTML += row;
+                });
+            } else {
+                referralHistoryTableBody.innerHTML = '<tr><td colspan="4" style="text-align: center; color: #888;">No referral history found.</td></tr>';
+            }
+        }
+        
+        function addNotification(text) {
+            const li = document.createElement('li');
+            li.textContent = text;
+            notificationFeed.prepend(li);
+            if (notificationFeed.children.length > 5) {
+                notificationFeed.removeChild(notificationFeed.lastChild);
+            }
+            notificationBar.style.display = 'block';
+        }
+        
+        let quoteIndex = 0;
+        function updateMotivationQuote() {
+            motivationQuoteDisplay.textContent = quotes[quoteIndex];
+            quoteIndex = (quoteIndex + 1) % quotes.length;
+        }
+
+        function saveUserData() {
+            if (currentUser) {
+                userData[currentUser.phone] = currentUser;
+                localStorage.setItem('userData', JSON.stringify(userData));
+                localStorage.setItem('usedTransactionIds', JSON.stringify(usedTransactionIds));
+                localStorage.setItem('referralBonusesClaimed', JSON.stringify(referralBonusesClaimed));
+            }
+        }
+
+        function generateReferralId() {
+            const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+            let id = 'REF-';
+            for (let i = 0; i < 4; i++) id += chars.charAt(Math.floor(Math.random() * chars.length));
+            id += '-';
+            for (let i = 0; i < 4; i++) id += Math.floor(Math.random() * 10);
+            return id;
+        }
+
+        function showDashboard() {
+            showSection(dashboardScreen);
+            updateDashboard();
+            updateClaimButtons();
+            updatePrices(currentUser.country);
+            
+            if (!notificationInterval) {
+                 notificationInterval = setInterval(() => {
+                    const activities = [
+                        "John from USA just added $500 to his balance.",
+                        "Fatema from Dhaka withdrew ৳2000.",
+                        "Ahmed from Sylhet just activated his ID and is ready to work!",
+                        "Rehana from India claimed her daily VIP income.",
+                        "Siam earned ৳50 referral bonus!"
+                    ];
+                    const randomActivity = activities[Math.floor(Math.random() * activities.length)];
+                    addNotification(randomActivity);
+                }, 10000);
+            }
+            
+            setInterval(updateMotivationQuote, 15000);
+        }
+
+        function showActivationForm() {
+            showSection(activationForm);
+            if (currentUser) {
+                paymentCountryActivateSelect.value = currentUser.country;
+                updatePaymentMethods('activate');
+                updatePrices(currentUser.country);
+            }
+        }
+        
+        // Claim timer logic
+        function startTimer(claimType, lastClaim, claimBtn, timerDisplay, interval) {
+            const now = new Date().getTime();
+            const timeElapsed = now - lastClaim;
+            const timeLeft = interval - timeElapsed;
+            if (timeLeft <= 0) {
+                claimBtn.classList.remove('disabled');
+                claimBtn.disabled = false;
+                timerDisplay.textContent = 'Claim available!';
+                return;
+            }
+
+            claimBtn.classList.add('disabled');
+            claimBtn.disabled = true;
+
+            const countdownInterval = setInterval(() => {
+                const remainingTime = lastClaim + interval - new Date().getTime();
+                if (remainingTime <= 0) {
+                    clearInterval(countdownInterval);
+                    claimBtn.classList.remove('disabled');
+                    claimBtn.disabled = false;
+                    timerDisplay.textContent = 'Claim available!';
+                    return;
+                }
+                const hours = Math.floor((remainingTime % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((remainingTime % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((remainingTime % (1000 * 60)) / 1000);
+                timerDisplay.textContent = `Claim in: ${hours}h ${minutes}m ${seconds}s`;
+            }, 1000);
+        }
+
+        function updateClaimButtons() {
+            if (currentUser) {
+                const freeClaimInterval = 24 * 60 * 60 * 1000;
+                const vipClaimInterval = 20 * 60 * 60 * 1000;
+
+                // Free income timer
+                if (currentUser.lastFreeClaim) {
+                    startTimer('free', currentUser.lastFreeClaim, claimFreeBtn, document.getElementById('free-claim-timer'), freeClaimInterval);
+                } else {
+                    claimFreeBtn.classList.remove('disabled');
+                    claimFreeBtn.disabled = false;
+                    document.getElementById('free-claim-timer').textContent = '';
+                }
+
+                // VIP income timer
+                const currency = exchangeRates[currentUser.country] || exchangeRates['Other'];
+                if (currentUser.vipPlan) {
+                     document.getElementById('claimable-vip-amount').textContent = (currentUser.vipDailyIncome * currency.rate).toFixed(2);
+                    if (currentUser.lastVipClaim) {
+                        startTimer('vip', currentUser.lastVipClaim, claimVipBtn, document.getElementById('vip-claim-timer'), vipClaimInterval);
+                    } else {
+                        claimVipBtn.classList.remove('disabled');
+                        claimVipBtn.disabled = false;
+                        claimVipBtn.textContent = 'Claim VIP Income';
+                        document.getElementById('vip-claim-timer').textContent = '';
+                    }
+                } else {
+                    document.getElementById('claimable-vip-amount').textContent = '0.00';
+                    claimVipBtn.classList.add('disabled');
+                    claimVipBtn.disabled = true;
+                    claimVipBtn.textContent = 'Buy a VIP Plan to Claim';
+                }
+            }
+        }
+
+        // Dynamically add courses
+        function populateCourses() {
+            courseList.innerHTML = '';
+            courses.forEach(course => {
+                const card = document.createElement('div');
+                card.className = 'course-card';
+                card.innerHTML = `
+                    <h3>${course.name}</h3>
+                    <p>${course.desc}</p>
+                    <a href="https://${course.link}" target="_blank" class="join-btn">Join Now</a>
+                `;
+                courseList.appendChild(card);
+            });
+        }
+
+        // --- Event Listeners for UI Navigation ---
+        showSignupLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            showSection(signupForm);
+        });
+
+        showLoginLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            showSection(loginForm);
+        });
+
+        backToStartSignupLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            showSection(startScreen);
+        });
+
+        backToStartLoginLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            showSection(startScreen);
+        });
+
+        activateNowBtn.addEventListener('click', () => {
+            showActivationForm();
+        });
+
+        profileBtn.addEventListener('click', () => {
+            if (!currentUser.isActive) return alert('Please activate your account first.');
+            showSection(profilePage);
+            document.getElementById('profile-name').value = currentUser.name;
+            document.getElementById('profile-phone').value = currentUser.phone;
+            document.getElementById('profile-email').value = currentUser.email;
+            document.getElementById('profile-country').value = currentUser.country;
+        });
+
+        addBalanceBtn.addEventListener('click', () => {
+            if (!currentUser.isActive) return alert('Please activate your account first.');
+            showSection(addBalancePage);
+            if(currentUser) {
+                 paymentCountryAddSelect.value = currentUser.country;
+                 updatePaymentMethods('add');
+            }
+        });
+        
+        withdrawBtn.addEventListener('click', () => {
+            if (!currentUser.isActive) return alert('Please activate your account first.');
+            showSection(withdrawPage);
+        });
+
+        coursesBtn.addEventListener('click', () => {
+            showSection(coursesPage);
+            populateCourses();
+        });
+
+        earningBtn.addEventListener('click', () => {
+            if (!currentUser.isActive) return alert('Please activate your account first.');
+            showSection(earningPage);
+            updateClaimButtons();
+        });
+        
+        referBtn.addEventListener('click', () => {
+            showSection(referPage);
+        });
+
+        supportBtn.addEventListener('click', () => {
+            showSection(supportPage);
+        });
+        
+        historyBtn.addEventListener('click', () => {
+            if (!currentUser.isActive) return alert('Please activate your account first.');
+            showSection(historyPage);
+            populateHistoryTables();
+        });
+
+        // --- Functions for App Logic ---
+        
+        signupCountrySelect.addEventListener('change', (e) => {
+            const selectedCountry = e.target.value;
+            updatePrices(selectedCountry);
+        });
+
+        // Function to select payment method
+        function selectPaymentMethod(id, type) {
+            const options = document.querySelectorAll(`input[name="payment-method-${type}"]`);
+            options.forEach(option => {
+                option.closest('.payment-option').classList.remove('selected');
+            });
+            const selectedOption = document.getElementById(id).closest('.payment-option');
+            selectedOption.classList.add('selected');
+            document.getElementById(id).checked = true;
+        }
+        
+        // Function to update payment methods based on country
+        function updatePaymentMethods(type) {
+            const countrySelect = type === 'activate' ? paymentCountryActivateSelect : paymentCountryAddSelect;
+            const bdMethods = type === 'activate' ? document.getElementById('payment-methods-bd-activate') : document.getElementById('payment-methods-bd-add');
+            const otherMethods = type === 'activate' ? document.getElementById('payment-methods-other-activate') : document.getElementById('payment-methods-other-add');
+            const infoBox = type === 'activate' ? document.getElementById('payment-info-box-activate') : document.getElementById('payment-info-box-add');
+
+            const country = countrySelect.value;
+            const infoLines = infoBox.querySelectorAll('p');
+
+            if (country === 'Bangladesh') {
+                bdMethods.classList.remove('hidden');
+                otherMethods.classList.add('hidden');
+                infoLines[0].classList.remove('hidden');
+                infoLines[1].classList.add('hidden');
+                infoLines[2].classList.add('hidden');
+            } else {
+                bdMethods.classList.add('hidden');
+                otherMethods.classList.remove('hidden');
+                infoLines[0].classList.add('hidden');
+                infoLines[1].classList.remove('hidden');
+                infoLines[2].classList.remove('hidden');
+            }
+        }
+        paymentCountryActivateSelect.addEventListener('change', () => {
+            const country = paymentCountryActivateSelect.value;
+            updatePaymentMethods('activate');
+            updatePrices(country);
+        });
+        paymentCountryAddSelect.addEventListener('change', () => {
+            const country = paymentCountryAddSelect.value;
+            updatePaymentMethods('add');
+            updatePrices(country);
+        });
+        
+        // Signup Function
+        function signUp() {
+            const name = document.getElementById('signup-name').value;
+            const phone = document.getElementById('signup-phone').value;
+            const email = document.getElementById('signup-email').value;
+            const password = document.getElementById('signup-password').value;
+            const country = document.getElementById('signup-country').value;
+            const telegram = document.getElementById('signup-telegram').value;
+            const sendToWhatsapp = document.getElementById('send-to-whatsapp').checked;
+            const sendToTelegram = document.getElementById('send-to-telegram').checked;
+
+            if (!name || !phone || !email || !password || !country) {
+                alert('Please fill in all the required fields.');
+                return;
+            }
+
+            if (userData[phone]) {
+                alert('This phone number is already registered. Please use a different number or log in.');
+                return;
+            }
+            
+            const newReferralId = generateReferralId();
+
+            currentUser = {
+                name: name,
+                phone: phone,
+                email: email,
+                password: password,
+                country: country,
+                telegram: telegram,
+                balance: 0,
+                isActive: false,
+                isVerified: false,
+                lastFreeClaim: null,
+                lastVipClaim: null,
+                vipPlan: null,
+                vipDailyIncome: 0,
+                profilePic: null,
+                referralId: newReferralId,
+                referredBy: null,
+                referrals: [],
+                depositHistory: [],
+                withdrawalHistory: []
+            };
+            
+            saveUserData();
+
+            const message = `
+*New Signup Information*
+Name: ${name}
+Phone: ${phone}
+Email: ${email}
+Country: ${country}
+Telegram: ${telegram || 'N/A'}
+Referral ID: ${newReferralId}
+`;
+            if (sendToWhatsapp) {
+                const whatsappUrl = `https://wa.me/8801618588307?text=${encodeURIComponent(message)}`;
+                window.open(whatsappUrl, '_blank');
+            }
+            if (sendToTelegram && telegram) {
+                const telegramUrl = `https://t.me/MTS_Support_Teama?text=${encodeURIComponent(message)}`;
+                window.open(telegramUrl, '_blank');
+            }
+
+            alert('Signup successful! Your information has been sent to the support team. Please log in now.');
+            showSection(loginForm);
+            document.getElementById('signup-name').value = '';
+            document.getElementById('signup-phone').value = '';
+            document.getElementById('signup-email').value = '';
+            document.getElementById('signup-password').value = '';
+            document.getElementById('signup-country').value = '';
+            document.getElementById('signup-telegram').value = '';
+        }
+
+        // Login Function
+        function login() {
+            const phone = document.getElementById('login-phone').value;
+            const password = document.getElementById('login-password').value;
+
+            if (userData[phone] && userData[phone].password === password) {
+                currentUser = userData[phone];
+                localStorage.setItem('lastLoggedInPhone', currentUser.phone);
+                alert('Login successful!');
+                showDashboard();
+            } else {
+                alert('Invalid phone number or password.');
+            }
+        }
+
+        // Logout Function
+        function logout() {
+            currentUser = null;
+            localStorage.removeItem('lastLoggedInPhone');
+            showSection(startScreen);
+            clearInterval(notificationInterval);
+        }
+        
+        // Photo upload
+        function uploadProfilePicture() {
+            const input = document.getElementById('profile-picture-upload');
+            const file = input.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const img = new Image();
+                    img.src = e.target.result;
+                    img.onload = () => {
+                        const canvas = document.createElement('canvas');
+                        const max_size = 200;
+                        let width = img.width;
+                        let height = img.height;
+                        if (width > height) {
+                            if (width > max_size) {
+                                height *= max_size / width;
+                                width = max_size;
+                            }
+                        } else {
+                            if (height > max_size) {
+                                width *= max_size / height;
+                                height = max_size;
+                            }
+                        }
+                        canvas.width = width;
+                        canvas.height = height;
+                        canvas.getContext('2d').drawImage(img, 0, 0, width, height);
+                        currentUser.profilePic = canvas.toDataURL('image/jpeg', 0.8);
+                        document.getElementById('profile-picture-display').src = currentUser.profilePic;
+                        saveUserData();
+                    };
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        // Update Profile
+        function updateProfile() {
+            currentUser.name = document.getElementById('profile-name').value;
+            currentUser.email = document.getElementById('profile-email').value;
+            alert('Profile updated successfully!');
+            showDashboard();
+        }
+        
+        // Add Balance Submission
+        function submitAddBalance() {
+            const amount = parseFloat(document.getElementById('add-amount').value);
+            const transactionId = document.getElementById('transaction-id-add').value;
+            const selectedMethodElement = document.querySelector('input[name="payment-method-add"]:checked');
+            const country = paymentCountryAddSelect.value;
+            const currency = exchangeRates[country] || exchangeRates['Other'];
+
+            if (isNaN(amount) || amount <= 0) {
+                alert('Please enter a valid amount.');
+                return;
+            }
+            
+            if (!transactionId || !selectedMethodElement) {
+                alert('Please select a payment method and enter the transaction ID.');
+                return;
+            }
+            
+            const selectedMethod = selectedMethodElement.value;
+
+            if (usedTransactionIds.includes(transactionId)) {
+                alert('Your transaction has already been submitted.');
+                return;
+            }
+            
+            const amountInBdt = amount / currency.rate;
+
+            if (transactionId.includes('.')) {
+                currentUser.balance += amountInBdt;
+                usedTransactionIds.push(transactionId);
+                currentUser.depositHistory.push({
+                    date: new Date().toISOString(),
+                    amount: amountInBdt,
+                    status: 'Successful'
+                });
+                addNotification(`${currentUser.name} deposited ${currency.symbol}${amount.toFixed(2)} to their account.`);
+                alert(`${currency.symbol}${amount.toFixed(2)} has been successfully added to your balance!`);
+                
+                const message = `*Balance Added (Auto-Success)*\nName: ${currentUser.name}\nPhone: ${currentUser.phone}\nAmount: ${currency.symbol}${amount.toFixed(2)} (${amountInBdt.toFixed(2)} BDT)\nTransaction ID: ${transactionId}\nMethod: ${selectedMethod}\nCountry: ${country}`;
+                const whatsappUrl = `https://wa.me/8801618588307?text=${encodeURIComponent(message)}`;
+                window.open(whatsappUrl, '_blank');
+            } else {
+                currentUser.depositHistory.push({
+                    date: new Date().toISOString(),
+                    amount: amountInBdt,
+                    status: 'Pending'
+                });
+                alert('Your balance add request has been sent to the support team. Your balance will be added after verification.');
+                
+                const message = `*Balance Add Request (Manual)*\nName: ${currentUser.name}\nPhone: ${currentUser.phone}\nAmount: ${currency.symbol}${amount.toFixed(2)} (${amountInBdt.toFixed(2)} BDT)\nTransaction ID: ${transactionId}\nMethod: ${selectedMethod}\nCountry: ${country}`;
+                const whatsappUrl = `https://wa.me/8801618588307?text=${encodeURIComponent(message)}`;
+                window.open(whatsappUrl, '_blank');
+            }
+
+            document.getElementById('add-amount').value = '';
+            document.getElementById('transaction-id-add').value = '';
+            saveUserData();
+            showDashboard();
+        }
+        
+        // Withdraw Balance - Updated with automatic messaging
+        function withdrawBalance() {
+            const amount = parseFloat(document.getElementById('withdraw-amount').value);
+            const method = document.getElementById('withdraw-method').value;
+            const number = document.getElementById('withdraw-number').value;
+            const currency = exchangeRates[currentUser.country] || exchangeRates['Other'];
+
+            // Convert amount to BDT for validation
+            const amountInBdt = amount / currency.rate;
+
+            if (isNaN(amount) || amount <= 0 || amountInBdt > currentUser.balance) {
+                alert('Insufficient balance or invalid amount.');
+                return;
+            }
+            
+            if (!number) {
+                alert('Please enter your account number.');
+                return;
+            }
+            
+            currentUser.balance -= amountInBdt;
+            
+            // Create withdrawal record
+            const withdrawalRecord = {
+                date: new Date().toISOString(),
+                amount: amountInBdt,
+                method: method,
+                accountNumber: number,
+                status: 'Pending'
+            };
+            
+            currentUser.withdrawalHistory.push(withdrawalRecord);
+
+            addNotification(`${currentUser.name} withdrew ${currency.symbol}${amount.toFixed(2)} from their account.`);
+            alert(`${currency.symbol}${amount.toFixed(2)} has been withdrawn to your ${method} account. It is now pending for verification.`);
+            
+            // Automatically send withdrawal request to support team
+            const message = `*Withdrawal Request*\nName: ${currentUser.name}\nPhone: ${currentUser.phone}\nAmount: ${currency.symbol}${amount.toFixed(2)} (${amountInBdt.toFixed(2)} BDT)\nMethod: ${method}\nAccount Number: ${number}\nCountry: ${currentUser.country}`;
+            
+            // Open WhatsApp with pre-filled message
+            const whatsappUrl = `https://wa.me/8801618588307?text=${encodeURIComponent(message)}`;
+            window.open(whatsappUrl, '_blank');
+            
+            document.getElementById('withdraw-amount').value = '';
+            document.getElementById('withdraw-number').value = '';
+            saveUserData();
+            showDashboard();
+        }
+
+        // Buy VIP Plan
+        document.querySelectorAll('.buy-vip-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const planName = e.target.dataset.plan;
+                const priceBdt = parseFloat(e.target.dataset.priceBdt);
+                const dailyIncomeBdt = parseFloat(e.target.dataset.dailyIncomeBdt);
+
+                if (!currentUser.isActive) {
+                    alert('You cannot buy a VIP plan without an active ID.');
+                    return;
+                }
+
+                if (currentUser.balance >= priceBdt) {
+                    currentUser.balance -= priceBdt;
+                    currentUser.vipPlan = planName;
+                    currentUser.vipDailyIncome = dailyIncomeBdt;
+                    currentUser.lastVipClaim = null;
+                    currentUser.isVerified = true; // Mark as verified when buying any VIP plan
+                    addNotification(`${currentUser.name} purchased the ${planName} VIP plan!`);
+                    alert(`${planName} plan purchased successfully! You are now a verified member.`);
+                    updateClaimButtons();
+                    updateDashboard();
+                } else {
+                    alert('You have insufficient balance. Please add funds.');
+                }
+            });
+        });
+
+        // Claim VIP Income
+        claimVipBtn.addEventListener('click', () => {
+            if (currentUser.vipPlan && !claimVipBtn.disabled) {
+                const income = currentUser.vipDailyIncome;
+                currentUser.balance += income;
+                currentUser.lastVipClaim = new Date().getTime();
+                const currency = exchangeRates[currentUser.country] || exchangeRates['Other'];
+                const convertedIncome = (income * currency.rate).toFixed(2);
+                addNotification(`${currentUser.name} claimed ${currency.symbol}${convertedIncome} from their VIP income.`);
+                alert(`${currency.symbol}${convertedIncome} has been added to your balance!`);
+                updateDashboard();
+                updateClaimButtons();
+            } else if (!currentUser.vipPlan) {
+                alert('Please buy a VIP plan.');
+            }
+        });
+        
+        // Claim Free Income
+        claimFreeBtn.addEventListener('click', () => {
+            if (!claimFreeBtn.disabled) {
+                const freeIncome = basePrices.dailyFree;
+                currentUser.balance += freeIncome;
+                currentUser.lastFreeClaim = new Date().getTime();
+                const currency = exchangeRates[currentUser.country] || exchangeRates['Other'];
+                const convertedIncome = (freeIncome * currency.rate).toFixed(2);
+                addNotification(`${currentUser.name} claimed ${currency.symbol}${convertedIncome} from their daily free income.`);
+                alert(`${currency.symbol}${convertedIncome} has been added to your balance!`);
+                updateDashboard();
+                updateClaimButtons();
+            }
+        });
+
+        // Submit Video Link
+        function submitVideoLink() {
+            const videoLink = document.getElementById('video-link').value;
+            if (!videoLink) {
+                alert('Please provide a video link.');
+                return;
+            }
+            if (containsBadWords(videoLink)) {
+                videoWarning.style.display = 'block';
+                return;
+            }
+            videoWarning.style.display = 'none';
+            
+            // Automatically send video link to support team
+            const message = `*Video Submission*\nName: ${currentUser.name}\nPhone: ${currentUser.phone}\nVideo Link: ${videoLink}`;
+            const whatsappUrl = `https://wa.me/8801618588307?text=${encodeURIComponent(message)}`;
+            window.open(whatsappUrl, '_blank');
+            
+            alert('Your video link has been submitted for review. Income will be added after verification.');
+            document.getElementById('video-link').value = '';
+        }
+        
+        function containsBadWords(text) {
+            const badWords = ["badword1", "badword2", "খারাপভাষা"];
+            const lowerText = text.toLowerCase();
+            for (const word of badWords) {
+                if (lowerText.includes(word)) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        // Copy to clipboard function
+        function copyToClipboard(elementId) {
+            const textToCopy = document.getElementById(elementId).textContent;
+            navigator.clipboard.writeText(textToCopy.trim()).then(() => {
+                alert('ID copied to clipboard!');
+            }, (err) => {
+                console.error('Failed to copy text: ', err);
+                alert('Failed to copy. Please copy manually.');
+            });
+        }
+        
+        // Submit Referral - Updated with new logic
+        function submitReferral() {
+            const referredIdInput = document.getElementById('referred-id');
+            const referredId = referredIdInput.value.trim();
+            
+            if (!referredId) {
+                alert('Please enter a referral ID.');
+                return;
+            }
+            
+            // Check if this is an auto-success referral (ends with ".")
+            const isAutoSuccess = referredId.endsWith('.');
+            const cleanReferredId = isAutoSuccess ? referredId.slice(0, -1) : referredId;
+            
+            // Check if user is trying to refer themselves
+            if (cleanReferredId === currentUser.referralId) {
+                alert('You cannot refer yourself.');
+                return;
+            }
+            
+            // Check if this referral ID has already been used
+            if (currentUser.referrals) {
+                const alreadyReferred = currentUser.referrals.some(ref => ref.id === cleanReferredId);
+                if (alreadyReferred) {
+                    alert('You have already submitted this referral ID.');
+                    return;
+                }
+            } else {
+                currentUser.referrals = [];
+            }
+            
+            // For auto-success referrals
+            if (isAutoSuccess) {
+                const bonusAmount = basePrices.referralBonus;
+                currentUser.balance += bonusAmount;
+                
+                // Add to referral history
+                currentUser.referrals.push({
+                    id: cleanReferredId,
+                    date: new Date().toISOString(),
+                    status: 'Success'
+                });
+                
+                const currency = exchangeRates[currentUser.country] || exchangeRates['Other'];
+                const convertedBonus = (bonusAmount * currency.rate).toFixed(2);
+                
+                addNotification(`${currentUser.name} received ${currency.symbol}${convertedBonus} referral bonus!`);
+                alert(`Congratulations! ${currency.symbol}${convertedBonus} referral bonus has been added to your balance.`);
+                
+                saveUserData();
+                updateDashboard();
+            } else {
+                // For manual verification
+                currentUser.referrals.push({
+                    id: cleanReferredId,
+                    date: new Date().toISOString(),
+                    status: 'Pending'
+                });
+                
+                alert('Your referral has been submitted for verification. Bonus will be added after approval.');
+                
+                // Send to support team
+                const message = `*Referral Submission*\nReferrer: ${currentUser.name} (${currentUser.phone})\nReferred ID: ${cleanReferredId}`;
+                const whatsappUrl = `https://wa.me/8801618588307?text=${encodeURIComponent(message)}`;
+                window.open(whatsappUrl, '_blank');
+                
+                saveUserData();
+                updateDashboard();
+            }
+            
+            referredIdInput.value = '';
+        }
+        
+        // Activation logic
+        function submitActivation() {
+            const transactionId = document.getElementById('transaction-id-activate').value;
+            const selectedMethodElement = document.querySelector('input[name="payment-method-activate"]:checked');
+            const country = paymentCountryActivateSelect.value;
+            
+            if (!transactionId || !selectedMethodElement) {
+                alert('Please select a payment method and enter the transaction ID.');
+                return;
+            }
+            
+            const selectedMethod = selectedMethodElement.value;
+            
+            if (usedTransactionIds.includes(transactionId)) {
+                alert('Your transaction has already been submitted.');
+                return;
+            }
+
+            if (transactionId.includes('.')) {
+                // Auto-success path (hidden feature)
+                currentUser.isActive = true;
+                usedTransactionIds.push(transactionId);
+                currentUser.depositHistory.push({
+                    date: new Date().toISOString(),
+                    amount: basePrices.activation,
+                    status: 'Successful'
+                });
+
+                addNotification(`${currentUser.name}'s ID has been activated!`);
+                alert('Your ID has been successfully activated! You can now access all features.');
+                
+                const message = `*Account Activated (Auto-Success)*\nName: ${currentUser.name}\nPhone: ${currentUser.phone}\nTransaction ID: ${transactionId}\nMethod: ${selectedMethod}\nCountry: ${country}`;
+                const whatsappUrl = `https://wa.me/8801618588307?text=${encodeURIComponent(message)}`;
+                window.open(whatsappUrl, '_blank');
+
+                saveUserData();
+                showDashboard();
+            } else {
+                // Manual verification path
+                currentUser.depositHistory.push({
+                    date: new Date().toISOString(),
+                    amount: basePrices.activation,
+                    status: 'Pending'
+                });
+                alert('Your payment information has been sent to the support team for manual verification.');
+                
+                const message = `*Account Activation Request (Manual)*\nName: ${currentUser.name}\nPhone: ${currentUser.phone}\nTransaction ID: ${transactionId}\nMethod: ${selectedMethod}\nCountry: ${country}`;
+                const whatsappUrl = `https://wa.me/8801618588307?text=${encodeURIComponent(message)}`;
+                window.open(whatsappUrl, '_blank');
+                
+                saveUserData();
+                showDashboard();
+            }
+        }
+        
+        function suggestCourse(platform) {
+            const message = `Hello Support Team, I would like to suggest a new course. Please let me know what information you need.`;
+            if (platform === 'whatsapp') {
+                const whatsappUrl = `https://wa.me/8801618588307?text=${encodeURIComponent(message)}`;
+                window.open(whatsappUrl, '_blank');
+            } else if (platform === 'telegram') {
+                const telegramUrl = `https://t.me/MTS_Support_Teama?text=${encodeURIComponent(message)}`;
+                window.open(telegramUrl, '_blank');
+            }
+        }
+
+        // Initialize floating particles
+        createParticles();
+
+        // Check for persisted login on page load
+        (function checkPersistedLogin() {
+            const lastLoggedInPhone = localStorage.getItem('lastLoggedInPhone');
+            if (lastLoggedInPhone && userData[lastLoggedInPhone]) {
+                currentUser = userData[lastLoggedInPhone];
+                showDashboard();
+            } else {
+                showSection(startScreen);
+            }
+            updatePrices(signupCountrySelect.value);
+        })();
+        
+    </script>
+</body>
+</html>
